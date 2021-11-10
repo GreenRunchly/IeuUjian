@@ -1,11 +1,5 @@
-# ExamBrowser-Android
-Aplikasi Exam Browser untuk Android
+# Jadwal Pelajaran SMAN 3 Kabupaten Tangerang
+Aplikasi dibuat agar para siswa akan lebih mudah melihat jadwal pelajaran mereka dengan up-to-date! 
 
-Demo Aplikasi : https://goo.gl/Q1c6PK
-Link Aplikasi : https://goo.gl/gtK42j
-
-Fitur Aplikasi :
-- Ketika aplikasi sudah masuk tampilan web ujian, tidak bisa untuk pidah ke aplikasi lain.
-- Tidak bisa ke home
-- Tidak bisa screenshot
-- Swipe to Refresh
+# Minimum System Requirement: <br>
+Android 5.1 <br>

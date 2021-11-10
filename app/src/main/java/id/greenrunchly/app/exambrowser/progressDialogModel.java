@@ -13,7 +13,7 @@ public class progressDialogModel {
 
     public static void pdMenyiapkanDataLogin(Context context){
         progressDialog=new ProgressDialog(context, R.style.AppCompatAlertDialogStyle);
-        progressDialog.setMessage("Menyiapkan Data....");
+        progressDialog.setMessage("Loading...");
         progressDialog.setTitle("Silahkan Tunggu");
         progressDialog.show();
     }

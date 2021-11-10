@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     view.getSettings().setDomStorageEnabled(true);
                 } else {
                     Toast.makeText(MainActivity.this, "Url tidak valid/offline", Toast.LENGTH_LONG).show();
-                    view.loadDataWithBaseURL(null, "<html><body><img width=\"100%\" height=\"100%\" src=\"file:///android_res/drawable/offline.png\"></body></html>", "text/html", "UTF-8", null);
+                    view.loadDataWithBaseURL(null, "<html><body><img width=\"100%\" height=\"100%\" src=\"file:///android_res/drawable/no_network.png\"></body></html>", "text/html", "UTF-8", null);
                     progressDialogModel.hideProgressDialog();
                     swipeRefreshLayout.setRefreshing(false);
                     Intent i = new Intent(getBaseContext(), InputAddress.class);
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 progressDialogModel.pdMenyiapkanDataLogin(MainActivity.this);
             } else {
                 Toast.makeText(MainActivity.this, "Url tidak valid/offline", Toast.LENGTH_LONG).show();
-                view.loadDataWithBaseURL(null, "<html><body><img width=\"100%\" height=\"100%\" src=\"file:///android_res/drawable/offline.png\"></body></html>", "text/html", "UTF-8", null);
+                view.loadDataWithBaseURL(null, "<html><body><img width=\"100%\" height=\"100%\" src=\"file:///android_res/drawable/no_network.png\"></body></html>", "text/html", "UTF-8", null);
                 progressDialogModel.hideProgressDialog();
                 swipeRefreshLayout.setRefreshing(false);
                 Intent i = new Intent(getBaseContext(), InputAddress.class);
