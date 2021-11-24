@@ -9,4 +9,7 @@
     <color name="colorGradientBawah">#d7d702</color>
     <color name="colorTombol">#f6dfb3</color>
     <color name="colorBackground">#f8f9fa</color>
+    <color name="warnaHijauMuda">#ddffbc</color>
+    <color name="warnaHijauTua">#91c788</color>
+    <color name="warnaKuning">#eef500</color>
 </resources>
