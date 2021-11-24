@@ -79,7 +79,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\Green Runchly\Documents\Android Studio Projects\Android Project\Exam Browser\icon.png" />
+                                                <entry key="imagePath" value="D:\AppProjects\android-studio-project\projects\exambrowser\icon-transparent-white.png" />
                                                 <entry key="scalingPercent" value="60" />
                                               </map>
                                             </option>
@@ -113,8 +113,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffffff" />
-                                      <entry key="outputName" value="ic_app" />
+                                      <entry key="backgroundColor" value="91c788" />
+                                      <entry key="outputName" value="icon_app" />
                                     </map>
                                   </option>
                                 </PersistentState>
