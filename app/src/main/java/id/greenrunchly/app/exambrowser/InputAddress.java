@@ -19,13 +19,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class InputAddress extends Activity {
-    private Button btnLanjut;
     private EditText inputAddress;
     private TextInputLayout inputLayoutAddress;
-    private String s = "online";
 
     private class MyTextWatcher implements TextWatcher {
-        private View view;
+        private final View view;
 
         private MyTextWatcher(View view) {
             this.view = view;
@@ -38,12 +36,8 @@ public class InputAddress extends Activity {
         }
 
         public void afterTextChanged(Editable editable) {
-            switch (this.view.getId()) {
-                case R.id.input_address /*2131230805*/:
-                    InputAddress.this.validateAddress();
-                    return;
-                default:
-                    return;
+            if (this.view.getId() == R.id.input_address) { /*2131230805*/
+                InputAddress.this.validateAddress();
             }
         }
     }
@@ -53,7 +47,7 @@ public class InputAddress extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_address);
         try {
-            s = getIntent().getStringExtra("valid");
+            String s = getIntent().getStringExtra("valid");
             if (s.equals("offline")){
                 Toast.makeText(InputAddress.this, "Url tidak valid/offline", Toast.LENGTH_LONG).show();
             }
@@ -69,9 +63,9 @@ public class InputAddress extends Activity {
                 }
             }
         });
-        this.btnLanjut = findViewById(R.id.btn_lanjut);
+        Button btnLanjut = findViewById(R.id.btn_lanjut);
         this.inputAddress.addTextChangedListener(new MyTextWatcher(this.inputAddress));
-        this.btnLanjut.setOnClickListener(new View.OnClickListener() {
+        btnLanjut.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 InputAddress.this.submitForm();
             }
@@ -94,7 +88,7 @@ public class InputAddress extends Activity {
             }
 
             public void afterTextChanged(Editable s) {
-                prefs.edit().putString("autoSave", s.toString()).commit();
+                prefs.edit().putString("autoSave", s.toString()).apply();
             }
         });
         this.inputAddress.setOnKeyListener(new View.OnKeyListener() {
@@ -139,10 +133,7 @@ public class InputAddress extends Activity {
 
     public boolean isNetworkAvailable() {
         NetworkInfo networkInfo = ((ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-        if (networkInfo == null || !networkInfo.isConnected()) {
-            return false;
-        }
-        return true;
+        return networkInfo != null && networkInfo.isConnected();
     }
 
     public void onBackPressed() {
