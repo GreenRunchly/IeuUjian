@@ -49,7 +49,7 @@ public class InputAddress extends Activity {
         try {
             String s = getIntent().getStringExtra("valid");
             if (s.equals("offline")){
-                Toast.makeText(InputAddress.this, "Url tidak valid/offline", Toast.LENGTH_LONG).show();
+                Toast.makeText(InputAddress.this, s, Toast.LENGTH_LONG).show();
             }
         } catch (Exception e){
             e.printStackTrace();
