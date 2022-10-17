@@ -28,7 +28,8 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textColor="@color/colorAccent"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                tools:ignore="SpeakableTextPresentCheck,TextFields,TouchTargetSizeCheck"
+                android:importantForAutofill="no" />
         </android.support.design.widget.TextInputLayout>
 
         <Button

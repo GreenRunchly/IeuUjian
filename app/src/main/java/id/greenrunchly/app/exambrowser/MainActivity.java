@@ -1,5 +1,8 @@
 package id.greenrunchly.app.exambrowser;
 
+import static id.greenrunchly.app.exambrowser.DetectConnection.isNetworkStatusAvialable;
+
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.KeyguardManager;
 import android.app.PendingIntent;
@@ -8,12 +11,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -22,16 +23,16 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static id.greenrunchly.app.exambrowser.DetectConnection.isNetworkStatusAvialable;
-
 public class MainActivity extends AppCompatActivity {
     MyTimerTask myTimerTask;
     Timer timer;
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    @SuppressLint("SetJavaScriptEnabled")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //setSupportActionBar((Toolbar) findViewById(R.toolbar));
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         final String s = getIntent().getStringExtra("url");
@@ -54,12 +55,15 @@ public class MainActivity extends AppCompatActivity {
                     view.getSettings().setDomStorageEnabled(true);
                 } else {
                     Toast.makeText(MainActivity.this, "Url tidak valid/offline", Toast.LENGTH_LONG).show();
-                    view.loadDataWithBaseURL(null, "<html><body><img width=\"100%\" height=\"100%\" src=\"file:///android_res/drawable/no_network.png\"></body></html>", "text/html", "UTF-8", null);
+                    Intent intent = new Intent(MainActivity.this, InputAddress.class);
+                    startActivity(intent);
+                    finish();
+                    /*view.loadDataWithBaseURL(null, "<html><body><img width=\"100%\" height=\"100%\" src=\"file:///android_res/drawable/no_network.png\"></body></html>", "text/html", "UTF-8", null);
                     progressDialogModel.hideProgressDialog();
                     swipeRefreshLayout.setRefreshing(false);
                     Intent i = new Intent(getBaseContext(), InputAddress.class);
                     startActivity(i);
-                    finish();
+                    finish();*/
                 }
             }
         });
@@ -86,11 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 progressDialogModel.pdMenyiapkanDataLogin(MainActivity.this);
             } else {
                 Toast.makeText(MainActivity.this, "Url tidak valid/offline", Toast.LENGTH_LONG).show();
-                view.loadDataWithBaseURL(null, "<html><body><img width=\"100%\" height=\"100%\" src=\"file:///android_res/drawable/no_network.png\"></body></html>", "text/html", "UTF-8", null);
-                progressDialogModel.hideProgressDialog();
-                swipeRefreshLayout.setRefreshing(false);
-                Intent i = new Intent(getBaseContext(), InputAddress.class);
-                startActivity(i);
+                Intent intent = new Intent(MainActivity.this, InputAddress.class);
+                startActivity(intent);
                 finish();
             }
             return true;
@@ -111,26 +112,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            new MyDialogFragment().show(getSupportFragmentManager(), "MyDialogFragmentTag");
-        }
-        if (id == R.id.action_exit) {
-            System.exit(0);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public void onBackPressed() {
+        ///Memperlihatkan pesan
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Keluar");
-        alertDialogBuilder.setMessage("Yakin keluar dari aplikasi ?").setCancelable(false).setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setMessage("Ingin keluar dari aplikasi?").setCancelable(false).setPositiveButton("Iya", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 System.exit(0);
             }
@@ -165,14 +151,16 @@ public class MainActivity extends AppCompatActivity {
         KeyguardManager myKeyManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
         if (myKeyManager.inKeyguardRestrictedInputMode())
             return;
-        Log.d("TAG", "====Bringging Application to Front====");
+        Log.d("TAG", "==== Bringging Application to Front ====");
         Intent notificationIntent = new Intent(this, MainActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         try {
             pendingIntent.send();
         } catch (PendingIntent.CanceledException e) {
             e.printStackTrace();
         }
     }
+
+
 }

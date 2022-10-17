@@ -1,13 +1,21 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('E:\\GitProject\\ieu-ujian-assets\\keystore\\keystore.jks')
+            storePassword 'Juancok1878'
+            keyAlias 'greenrunchly'
+            keyPassword 'Juancok1878'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "id.greenrunchly.app.exambrowser"
-        minSdkVersion 14
+        minSdkVersion 21
         targetSdkVersion 30
-        versionCode 6
-        versionName "1.2.4"
+        versionCode 8
+        versionName "1.3.88"
     }
     buildTypes {
         release {
