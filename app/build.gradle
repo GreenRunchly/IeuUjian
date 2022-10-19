@@ -14,8 +14,8 @@ android {
         applicationId "id.greenrunchly.app.exambrowser"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 8
-        versionName "1.3.88"
+        versionCode 9
+        versionName "1.3.98"
     }
     buildTypes {
         release {
