@@ -7,7 +7,6 @@ import android.app.AlertDialog;
 import android.app.KeyguardManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -16,6 +15,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -37,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         final String s = getIntent().getStringExtra("url");
         final WebView view = findViewById(R.id.activity_main_webview);
+        view.setWebChromeClient(new WebChromeClient() {
+
+        });
+
         view.getSettings().setJavaScriptEnabled(true);
         view.getSettings().setUseWideViewPort(true);
         view.getSettings().setLoadWithOverviewMode(true);
@@ -47,24 +51,21 @@ public class MainActivity extends AppCompatActivity {
         view.loadUrl("http://" + s);
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE, Color.CYAN);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if(isNetworkStatusAvialable (MainActivity.this)) {
-                    view.reload();
-                    view.getSettings().setDomStorageEnabled(true);
-                } else {
-                    Toast.makeText(MainActivity.this, "Url tidak valid/offline", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(MainActivity.this, InputAddress.class);
-                    startActivity(intent);
-                    finish();
-                    /*view.loadDataWithBaseURL(null, "<html><body><img width=\"100%\" height=\"100%\" src=\"file:///android_res/drawable/no_network.png\"></body></html>", "text/html", "UTF-8", null);
-                    progressDialogModel.hideProgressDialog();
-                    swipeRefreshLayout.setRefreshing(false);
-                    Intent i = new Intent(getBaseContext(), InputAddress.class);
-                    startActivity(i);
-                    finish();*/
-                }
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            if(isNetworkStatusAvialable (MainActivity.this)) {
+                view.reload();
+                view.getSettings().setDomStorageEnabled(true);
+            } else {
+                Toast.makeText(MainActivity.this, "Url tidak valid/offline", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, InputAddress.class);
+                startActivity(intent);
+                finish();
+                /*view.loadDataWithBaseURL(null, "<html><body><img width=\"100%\" height=\"100%\" src=\"file:///android_res/drawable/no_network.png\"></body></html>", "text/html", "UTF-8", null);
+                progressDialogModel.hideProgressDialog();
+                swipeRefreshLayout.setRefreshing(false);
+                Intent i = new Intent(getBaseContext(), InputAddress.class);
+                startActivity(i);
+                finish();*/
             }
         });
     }
@@ -116,15 +117,7 @@ public class MainActivity extends AppCompatActivity {
         ///Memperlihatkan pesan
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Keluar");
-        alertDialogBuilder.setMessage("Ingin keluar dari aplikasi?").setCancelable(false).setPositiveButton("Iya", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                System.exit(0);
-            }
-        }).setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
+        alertDialogBuilder.setMessage("Ingin keluar dari aplikasi?").setCancelable(false).setPositiveButton("Iya", (dialog, id) -> System.exit(0)).setNegativeButton("Tidak", (dialog, id) -> dialog.cancel());
         alertDialogBuilder.create().show();
     }
 
